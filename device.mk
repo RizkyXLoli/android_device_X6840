@@ -116,3 +116,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
+
+# Recovery ramdisk parity extras (see ramdisk_extras/Android.mk)
+PRODUCT_PACKAGES += twrp_ramdisk_extras

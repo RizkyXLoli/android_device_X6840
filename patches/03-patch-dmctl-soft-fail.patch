@@ -1,0 +1,25 @@
+--- a/bootable/recovery/partition.cpp
++++ b/bootable/recovery/partition.cpp
+@@ -1980,18 +1980,14 @@
+     if (Mount_Point == "/data" && TWFunc::IsPathExists(userdata_mapper)) {
+         LOGINFO("Removing metadata-encryption userdata mapping before format.\n");
+         int dmctl_result = TWFunc::ExecCmd("dmctl delete userdata", false);
+-        if (dmctl_result != 0 && TWFunc::IsPathExists(userdata_mapper)) {
+-            LOGERR("Unable to remove metadata-encryption userdata mapping.\n");
+-            return false;
+-        }
++        if (dmctl_result != 0)
++            LOGINFO("dmctl delete userdata returned %i, continuing anyway.\n", dmctl_result);
+         for (int retry = 0;
+              retry < 100 && TWFunc::IsPathExists(userdata_mapper);
+              retry++)
+             usleep(10000);
+-        if (TWFunc::IsPathExists(userdata_mapper)) {
+-            LOGERR("Metadata-encryption userdata mapping did not disappear before format.\n");
+-            return false;
+-        }
++        if (TWFunc::IsPathExists(userdata_mapper))
++            LOGINFO("Metadata-encryption userdata mapping still present after dmctl, continuing anyway.\n");
+     }
+ #endif
+     // if (Is_Decrypted && !Decrypted_Block_Device.empty()) {
