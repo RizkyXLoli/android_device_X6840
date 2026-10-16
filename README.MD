@@ -8,3 +8,4 @@
 
 ## Development 
 - @Opek_Furina
+- @@RizkyXLoi
